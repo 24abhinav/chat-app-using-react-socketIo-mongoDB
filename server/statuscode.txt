@@ -1,0 +1,7 @@
+server Error   500
+bad request    400
+not found      404
+conflict       409 (duplicate)
+success        200
+unauthorized access 401
+forbidden      403 (not allowed )
