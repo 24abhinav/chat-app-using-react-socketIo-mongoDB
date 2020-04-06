@@ -3,12 +3,24 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+// Components
+
+import Login from './components/login';
+import LandingPage from './components/landingPage';
+
+
+const routing = (
+  <Router>
+    <div>
+      <Route exact path = "/" component = {Login} />
+      <Route exact path = "/chat" component = {LandingPage} />
+    </div>
+  </Router>
+)
+
+ReactDOM.render(routing, document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
