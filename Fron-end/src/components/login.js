@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import '../scss/login.scss';
 
 class Login extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {};
     }
 
     render() {

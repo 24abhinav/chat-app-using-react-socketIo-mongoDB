@@ -5,7 +5,8 @@ import Sidebar from './sidebar';
 export default class LandingPage extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
+
+        this.state = {};
     }
 
     render() {

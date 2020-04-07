@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 class Sidebar extends Component {
     constructor(props) {
         super(props)
+        this.state = {}
     }
 
     render() {
@@ -21,7 +22,7 @@ class Sidebar extends Component {
                                 </ul>
                             </div>
 
-                            <button id="leaveBtn" className="leaveBtn" onclick="leaveChat()">Leave Conversation</button>
+                            <button id="leaveBtn" className="leaveBtn">Leave Conversation</button>
                         </div>
 
 
@@ -33,8 +34,8 @@ class Sidebar extends Component {
                             </div>
                             <div className="footer" id="footer">
                                 <textarea id="message" placeholder="Enter Message Here"></textarea>
-                                <button className="sendBtn" onclick="sendMessage()">Send</button>
-                                <button className="locBtn" onclick="sendLocation()">Send Location</button>
+                                <button className="sendBtn">Send</button>
+                                <button className="locBtn">Send Location</button>
                             </div>
                         </div>
 
