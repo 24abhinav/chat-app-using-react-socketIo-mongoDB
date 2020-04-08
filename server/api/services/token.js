@@ -6,12 +6,11 @@
     const tokenSecretForAdmin = process.env.JWT_ADMIN_SECRET;
 
 
-    createToken = (tokenObject, isAdmin, response) => {
+    createToken = (req, tokenObject, expiry) => {
         return new Promise((res, rej) => { 
             const tokenKey = req.cookies.isAdmin ? tokenSecretForAdmin : tokenSecret;
-            const token = jwt.sign(tokenObject, tokenSecretForAdmin, {expiresIn: '1h'});
-            response.cookie('S', token);
-            res();
+            const token = jwt.sign(tokenObject, tokenKey, {expiresIn: expiry});
+            res(token);
         });
     },
     
