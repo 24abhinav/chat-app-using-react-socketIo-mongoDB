@@ -5,6 +5,7 @@
 
     const token = require('./api/services/token');
     const userModel = require('./api/models/User');
+    const db = require('./api/services/database');
 
     const app = express();
     app.use(express.urlencoded());
