@@ -32,6 +32,8 @@
                 const insertData = await db.insertOneDataToCollection(model, payload);
                 if(insertData) {
                     res.status(200).send({message: 'Sign Up Successful! Email has been send'});
+                } else {
+                    res.status(500).send({message: 'Internal Server Error'});
                 }
             }
         }

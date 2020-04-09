@@ -16,10 +16,10 @@
     
     authorizer = (req, res, next) => {
         const tokenKey = req.cookies.isAdmin ? tokenSecretForAdmin : tokenSecret;
-
+        const token = req.cookies.S;
         jwt.verify(token, tokenKey, (err, result) => {
             if (result) {
-                next()
+                next();
             } else {
                 res.status(401).send({message: 'Token is missing'});
             }

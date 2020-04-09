@@ -34,10 +34,15 @@
     findRecord = async (collectionName, findQuery) => {
         return new Promise((resolve, reject) => {
             database.collection(collectionName).find(findQuery).toArray((err, result) => {
-                if(err) 
-                    resolve(null);
-                else
-                    resolve(result);
+                resolve(result);
+            });
+        });
+    },
+
+    deleteOneRecord = async (collectionName, deleteQuery) => {
+        return new Promise((resolve, reject) => {
+            database.collection(collectionName).deleteOne(deleteQuery, (err, result) => {
+                resolve(result);
             });
         });
     },
@@ -46,6 +51,7 @@
         insertOneDataToCollection,
         insertManyDataToCollection,
         findRecord,
+        deleteOneRecord,
     };
 
 }());

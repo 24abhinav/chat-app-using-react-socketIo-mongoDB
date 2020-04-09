@@ -5,6 +5,10 @@
 
     const token = require('./api/services/token');
     const userModel = require('./api/models/User');
+    const roomModel = require('./api/models/Room');
+    const roomMemberAssociationModel = require('./api/models/RoomMemberAssociation');
+
+
     const db = require('./api/services/database');
 
     const app = express();
@@ -14,6 +18,8 @@
     app.use('/chat', token.authorizer);
     app.use('/user', userModel);
     app.use('/chat/user', userModel);
+    app.use('/chat/room', roomModel);
+    app.use('/chat/member', roomMemberAssociationModel);
 
 
     // ------------------------------------------- SERVER SETUP  -------------------------------------------
