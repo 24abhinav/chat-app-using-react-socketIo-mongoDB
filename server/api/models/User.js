@@ -1,4 +1,5 @@
 (function() {
+    
     const express = require('express');
     const router = express.Router();
     const db = require('../services/database');
@@ -7,12 +8,13 @@
     const smsService = require('../services/message');
     const emailTemplates = require('../views/emailTemplates');
     const tokenService = require('../services/token');
+    const model = 'User';
 
     router.post('/signip', async (req, res) => {
         const payload = {...req.body};
-        const checkDuplicate = await db.findRecord('User', {email: payload.email});
+        const checkDuplicate = await db.findRecord(model, {email: payload.email});
         if(checkDuplicate.length) {
-            res.status(400).send({message: 'User Is already exist!'});
+            res.status(409).send({message: 'User Is already exist!'});
         } else {
             payload.password = await bcrypt.encryptPassword(payload.password);
             if(!payload.password) {
@@ -27,13 +29,44 @@
                 }
                 await emailService.sendEmail(mailOption);
                 // await smsService.sendOtp({mobile: payload.mobile});
-                const insertData = await db.insertOneDataToCollection('User', payload);
+                const insertData = await db.insertOneDataToCollection(model, payload);
                 if(insertData) {
                     res.status(200).send({message: 'Sign Up Successful! Email has been send'});
                 }
             }
         }
     });
+
+    router.post('/login', async (req, res) => {
+        const payload = req.body;
+        if(!payload.email || !payload.password) {
+            res.status(400).send({message: 'Parametre(s) is missing'});
+        } else {
+            const userData = await db.findRecord(model, {email: payload.email});
+            if(userData.length) {
+                const passwordCheck = await bcrypt.passwordCompare(userData[0].password, payload.password);
+                if(passwordCheck) {
+                    const loginToken = await tokenService.createToken(req, payload, '5h');
+                    if(loginToken) {
+                        res.cookie('S', loginToken);
+                        res.status(200).send({message: 'Login successfull'});
+                    } else {
+                        res.status(500).send({message: 'Internal Server Error'});
+                    }
+                } else {
+                    res.status(400).send({message: 'Check your Email or password wrong'});
+                }
+            } else {
+                res.status(400).send({message: 'Email i snot fount Check your Email or password'});
+            }
+        }
+    });
+
+    router.get('/logout', async (req, res) => {
+        await res.clearCookie('S');
+        res.status(200).send({message: 'Logout successfull'});
+    });
+
 
     module.exports = router;
 
