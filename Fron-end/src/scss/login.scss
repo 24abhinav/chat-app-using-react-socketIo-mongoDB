@@ -1,71 +1,62 @@
-// For Login Page
 
-* {
-    margin: 0;
-    padding: 0;
-}
 
-*:focus {
-    outline: none;
-    box-shadow: none;
+section {
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,85,121,1) 0%, rgba(6,125,163,1) 52%, rgba(0,212,255,1) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
 }
 
 .main-div {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,85,121,1) 0%, rgba(6,125,163,1) 52%, rgba(0,212,255,1) 100%);
-}
-
-.newRoom {
-    background: white;
-    border-radius: 6px;
     padding: 20px;
-    box-shadow: 0px 5px 18px 5px rgb(12, 44, 50);
-    width: 270px;
-    height: auto;
+    box-shadow: 0 0 38px -15px #706f6dd6;
+    background: white;   
 }
 
-.newRoom h2 {
-    font-size: 23px;
-    font-weight: 600;
-    font-family: monospace;
-    padding-bottom: 15px;
+button:active {
+    outline: none;
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
-}
 
-.form input, input:disabled {
-    border: 0.9px solid black;
-    padding: 4px;
-    font-size: 15px;
-    font-weight: 600;
-    font-family: monospace;
-    border-radius: 2px;
-    color: #655f5f;
-    margin-bottom: 20px;
-    background: transparent;
-}
+    h1 {
+        font-size: 25px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        font-family: sans-serif;
+    }
 
-.form button {
-    border: navajowhite;
-    padding: 10px;
-    background: red;
-    color: white;
-    font-size: 14px;
-    font-weight: 600;
-    font-family: monospace;
-    letter-spacing: 1px;
-    cursor: pointer;
-    border-radius: 2px;
-}
+    input:focus {
+        box-shadow: none;
+        border: 1px solid #2f669d;
+        outline: none;
+    }
 
-.form input:focus {
-    border: 0.9px solid #1967ee;
+
+    form div {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 20px;
+
+
+        button {
+            padding: 4px 17px;
+            border: none;
+            background: black;
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            box-shadow: 2px 15px 22px -10px rgba(0,0,0,.6);
+        }
+    }
+
 }
