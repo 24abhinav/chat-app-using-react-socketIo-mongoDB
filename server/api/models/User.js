@@ -53,7 +53,7 @@
                     if(loginToken) {
                         // await res.cookie('S', loginToken);
                         // res.cookie('S',loginToken, { maxAge: 900000, httpOnly: true });
-                        res.status(200).send({message: 'Login successfull', token: loginToken});
+                        res.status(200).send({message: 'Login successfull',userData, token: loginToken});
                     } else {
                         res.status(500).send({message: 'Internal Server Error'});
                     }

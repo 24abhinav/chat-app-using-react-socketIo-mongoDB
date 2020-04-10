@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../scss/login.scss';
 import genaralService from '../Services/general.service';
+import Cookie from 'js-cookie';
 
 class Login extends Component {
     constructor(props) {
@@ -9,8 +10,8 @@ class Login extends Component {
             isLogin: true,
             error: '',
             loginObject: {
-                    email: 'abhinav1813@gmail.com',
-                    password: 'Abhi@123@123',
+                    email: '',
+                    password: '',
                     name: ''
             },
         };
@@ -45,14 +46,16 @@ class Login extends Component {
         let payload = this.state.loginObject;
         if(this.state.isLogin) {
             const response = await genaralService.post('SIGNIN', payload);
-            // if(response.Error) {
-            //     this.error = response.response.data.message;
-            // } else {
-            //     Cookies.set('S', response.response.data.token);
-            // }
-            console.log(response);
+            if(response.Error) {
+                this.setState({
+                    error: response.error.response.data.message
+                });
+            } else {
+                Cookie.set('S', response.response.data.token);
+            }
+
         } else {
-            const response = await genaralService.postRequest('SIGNUP', payload);
+            const response = await genaralService.popst('SIGNUP', payload);
         }
     }
 

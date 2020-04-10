@@ -1,0 +1,114 @@
+.profile-main-div {
+    width: 80vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.section {
+    position: relative;
+
+    .errorMsg {
+        position: absolute;
+        top: 5px;
+        left: 40px;
+        color: red;
+        font-weight: 600;
+        font-family: sans-serif;
+        letter-spacing: 1px;
+    }
+}
+
+button:focus {
+    outline: none;
+}
+
+.main-div {
+    display: flex;
+    position: relative;
+    padding: 25px;
+
+    .fa-edit {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #80bdff;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    div {
+        padding: 20px;
+        h2 {
+            font-size: 25px;
+            color: #504d4db3;
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-family: monospace;
+        }
+        input {
+            margin-top: 10px;
+            border: none;
+            border-bottom: 1px solid #ced4da;
+            border-radius: unset;
+        }
+        input:focus {
+            box-shadow: none;
+            border-color: #80bdff;
+        }
+        input:disabled {
+            background: transparent;
+        }
+    }
+}
+
+.editSaveButton {
+    border: none;
+    position: absolute;
+    bottom: -25px;
+    right: 10px;
+    padding: 10px;
+    background: #4646ff;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: monospace;
+    letter-spacing: 1px;
+    box-shadow: 0px 3px 7px 1px #5757dc;
+}
+
+.toster-section {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+        padding: 15px;
+        cursor: pointer;
+
+        h2 {
+            color: white;
+            font-size: 20px;
+            margin: 0;
+        }
+        p {
+            color: white;
+            font-size: 15px;
+            margin: 0;
+        }
+    }
+
+    .success {
+        background: #1d701d;
+    }
+    .error {
+        background: #f42e0a;
+    }
+}

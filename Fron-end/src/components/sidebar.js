@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import '../scss/sidenav.scss';
+import '../scss/global.scss';
+import { Link } from 'react-router-dom';
 
 class Sidebar extends Component {
     constructor(props) {
@@ -9,38 +12,27 @@ class Sidebar extends Component {
     render() {
         return(
             <React.Fragment>
-                <section>
-                    <div className="main-div">
-                        <div className="sidebar">
-                            <div id="OwnDetails">
-                            </div>
-                            <h3>GROUP MEMBERS</h3>
+                <div className = "sidebar-div">
+                    <nav className = "navBar">
+                        <h1 className = "global-heading">
+                            CHATS
+                            <span title = "Create New">+</span>
+                        </h1>
+                        <ul>
+                            <li className="active">Group 1</li>
+                            <li>Group 1</li>
+                            <li>Group 1</li>
+                            <li>Group 1</li>
+                        </ul>
+                    </nav>
 
-                            <div className="peaple">
-                                <ul id="userList">
-                                    <li>Abhinav</li>
-                                </ul>
-                            </div>
-
-                            <button id="leaveBtn" className="leaveBtn">Leave Conversation</button>
-                        </div>
-
-
-                        <div className="body">
-                            <div className="message-body">
-                                <div className="messages" id="messages">
-                                    <p>Hello G</p>
-                                </div>
-                            </div>
-                            <div className="footer" id="footer">
-                                <textarea id="message" placeholder="Enter Message Here"></textarea>
-                                <button className="sendBtn">Send</button>
-                                <button className="locBtn">Send Location</button>
-                            </div>
-                        </div>
-
+                    <div className = "sidebar-bottom">
+                        <Link className = "profile-link" to = "/profile">
+                            <em className="fa fa-user"></em>
+                            <h3>Abhinav Anand</h3>
+                        </Link>
                     </div>
-                </section>
+                </div>
             </React.Fragment>
         )
     }

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '../scss/landingPage.scss';
 import Sidebar from './sidebar';
+import { Route } from 'react-router-dom';
+import UserProfile from './userProfile';
 
 export default class LandingPage extends Component {
     constructor(props) {
@@ -12,7 +14,10 @@ export default class LandingPage extends Component {
     render() {
         return (
             <React.Fragment>
-                <Sidebar />
+                <div className = "landing-page">
+                    <Sidebar />
+                    <UserProfile />
+                </div>
             </React.Fragment>
         )
     }

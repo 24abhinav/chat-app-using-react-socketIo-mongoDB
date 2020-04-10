@@ -5,11 +5,12 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 // Components
 import LandingPage from './components/landingPage';
-import Cookies from 'js-cookie';
+import UserProfile from './components/userProfile';
 
 const ProtectedRoute = ({ component: Component, path, ...rest }) => {
   const loginStatus = Cookies.get('S'); // S is for access token
@@ -27,10 +28,11 @@ const ProtectedRoute = ({ component: Component, path, ...rest }) => {
 const routing = (
   <Router>
     <div>
-      <Switch>
-        <Route exact path = "/" component = {App} />
+      {/* <Switch> */}
+        <Route path = "/" component = {App} />
         <ProtectedRoute path="/chat"  component={LandingPage} />
-      </Switch>
+        <ProtectedRoute path="/profile"  component={UserProfile} />
+      {/* </Switch> */}
     </div>
   </Router>
 )

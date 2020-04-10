@@ -11,11 +11,14 @@
 
     insertOneDataToCollection = async (collectionName, collectionObj) => {
         return new Promise((resolve, reject) => {
+            const today = new Date().toISOString();
+            const payload = {
+                createdAt: today,
+                updatedAt: today,
+                ...collectionObj
+            }
             database.collection(collectionName).insertOne(collectionObj, (err, result) => {
-                if(err) 
-                    resolve(err);
-                else
-                    resolve(result);
+                resolve(result);
             });
         });
     },
@@ -23,10 +26,27 @@
     insertManyDataToCollection = async (collectionName, collectionObjArray) => {
         return new Promise((resolve, reject) => {
             database.collection(collectionName).insertMany(collectionObjArray, (err, result) => {
-                if(err) 
-                    resolve(null);
-                else
-                    resolve(result);
+                resolve(result);
+            });
+        });
+    },
+
+    updateOneRecord = async (collectionName, query, collectionObj) => {
+        return new Promise((resolve, reject) => {
+            let newValue = {...collectionObj, updatedAt: new Date().toISOString()};
+            newValue =  {$set: newValue};
+            database.collection(collectionName).updateOne(query, newValue, (err, result) => {
+                resolve(result);
+            });
+        });
+    },
+
+    updateManyRecord = async (collectionName, query, collectionObj) => {
+        return new Promise((resolve, reject) => {
+            let newValue = {...collectionObj, updatedAt: new Date().toISOString()};
+            newValue =  {$set: newValue};
+            database.collection(collectionName).updateMany(query, newValue, (err, result) => {
+                resolve(result);
             });
         });
     },

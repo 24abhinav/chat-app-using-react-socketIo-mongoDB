@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Login from './components/login';
 import Cookies from 'js-cookie';
+import LandingPage from './components/landingPage';
 
 class App extends Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class App extends Component {
       <div className="App">
         {
           this.state.isLogin ?
-          <h1>Logged in</h1>
+          <LandingPage />
           :
           <Login />
         }
