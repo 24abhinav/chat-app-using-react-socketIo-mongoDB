@@ -10,7 +10,7 @@
     const tokenService = require('../services/token');
     const model = 'User';
 
-    router.post('/signip', async (req, res) => {
+    router.post('/signup', async (req, res) => {
         const payload = {...req.body};
         const checkDuplicate = await db.findRecord(model, {email: payload.email});
         if(checkDuplicate.length) {
@@ -40,6 +40,7 @@
     });
 
     router.post('/login', async (req, res) => {
+        console.log(req.headers);
         const payload = req.body;
         if(!payload.email || !payload.password) {
             res.status(400).send({message: 'Parametre(s) is missing'});
@@ -50,8 +51,9 @@
                 if(passwordCheck) {
                     const loginToken = await tokenService.createToken(req, payload, '5h');
                     if(loginToken) {
-                        res.cookie('S', loginToken);
-                        res.status(200).send({message: 'Login successfull'});
+                        // await res.cookie('S', loginToken);
+                        // res.cookie('S',loginToken, { maxAge: 900000, httpOnly: true });
+                        res.status(200).send({message: 'Login successfull', token: loginToken});
                     } else {
                         res.status(500).send({message: 'Internal Server Error'});
                     }
@@ -64,8 +66,9 @@
         }
     });
 
-    router.get('/logout', async (req, res) => {
-        await res.clearCookie('S');
+    router.post('/logout', async (req, res) => {
+        console.log(req.cookies.S);
+        // await res.clearCookie('S');
         res.status(200).send({message: 'Logout successfull'});
     });
 

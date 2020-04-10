@@ -1,4 +1,4 @@
-const API_URL = 'localhost:4000';
+const API_URL = 'http://localhost:4000';
 (function() {
     // API Url
     module.exports = {

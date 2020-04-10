@@ -1,48 +1,23 @@
-const axios = require('axios');
+import axios from 'axios';
 const config = require('../config');
-(function () {
-    function validateEmail(email) {
 
+const api = axios.create({
+	withCredentials: false
+});
+
+
+const service = {
+    validateEmail: (email) => {
         return new RegExp('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$').test(String(email).toLowerCase())
-    }
+    },
 
-    function getRequest(baseurl, params) {
+    post: (baseUrl, payload) => {
         return new Promise((resolve, reject) => {
-            const url = config[baseurl];
-            axios.get(url, {
-                params: params
-            })
-            .then(function (response) {
-                resolve(response);
-            })
-            .catch(function (error) {
-                resolve(error);
-            })
-            .finally(function () {
-                // always executed
-            }); 
+            const url = config[baseUrl];
+            api.post(url, payload).then(response => resolve(response)).catch(error => resolve(error));
         });
-    }
+    },
 
-    function postRequest(baseurl, payload) {
-        return new Promise((resolve, reject) => {
-            const url = config[baseurl];
-            axios.post(url, payload)
-            .then(function (response) {
-                resolve(response);
-            })
-            .catch(function (error) {
-                resolve(error);
-            })
-            .finally(function () {
-                // always executed
-            }); 
-        });
-    }
+}
 
-    module.exports = {
-        validateEmail,
-        getRequest,
-        postRequest,
-    };
-}());
+export default service;

@@ -7,13 +7,11 @@ class Login extends Component {
         super(props);
         this.state = {
             isLogin: true,
+            error: '',
             loginObject: {
-                data: {
-                    email: '',
-                    password: '',
+                    email: 'abhinav1813@gmail.com',
+                    password: 'Abhi@123@123',
                     name: ''
-                },
-                error: ''
             },
         };
 
@@ -24,7 +22,7 @@ class Login extends Component {
     }
 
     changeHandler(e) {
-        this.state.loginObject.data[e.target.name] = e.target.value;
+        // this.state.loginObject[e.target.name] = e.target.value;
         // this.setState(state => {
         //     state.data[e.target.name] = e.target.value;
         // });
@@ -38,19 +36,28 @@ class Login extends Component {
 
     async login(e) {
         e.preventDefault();
-        if(!genaralService.validateEmail(this.state.loginObject.data.email)) {
-            this.state.loginObject.error = 'Email is not valid!';
+        if(!genaralService.validateEmail(this.state.loginObject.email)) {
+            this.setState({
+                error: 'Email is not valid!'
+            });
             return;
         }
-        let payload = this.state.loginObject.data;
+        let payload = this.state.loginObject;
         if(this.state.isLogin) {
-            const response = await genaralService.postRequest('SIGNIN', payload);
+            const response = await genaralService.post('SIGNIN', payload);
+            // if(response.Error) {
+            //     this.error = response.response.data.message;
+            // } else {
+            //     Cookies.set('S', response.response.data.token);
+            // }
+            console.log(response);
         } else {
-            console.log('register--->', payload);
+            const response = await genaralService.postRequest('SIGNUP', payload);
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        console.log(genaralService);
     }
 
     render() {
@@ -61,6 +68,7 @@ class Login extends Component {
                         {
                             this.state.isLogin ? 
                             <div className = "form">
+                                <h6 className="error">{this.state.error}</h6>
                                 <h1>Login With your Account !</h1>
                                 <form onSubmit = {this.login}>
                                     <label>Email</label>
@@ -77,6 +85,7 @@ class Login extends Component {
                             </div>
                             :
                             <div className = "form">
+                                <h6 className="error">{this.state.error}</h6>
                                 <h1>Create a new Account !</h1>
                                 <form onSubmit = {this.login}>
                                     <label>Name</label>
