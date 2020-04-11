@@ -48,13 +48,15 @@
         text-decoration: underline;
         position: relative;
 
-        span {
+        button {
             position: absolute;
             right: -46px;
             top: -12px;
-            font-size: 50px;
+            font-size: 51px;
             cursor: pointer;
             color: #d8e6d8;
+            border: none;
+            background: transparent;
         }
     }
     ul {

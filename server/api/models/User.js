@@ -29,7 +29,7 @@
                 }
                 await emailService.sendEmail(mailOption);
                 // await smsService.sendOtp({mobile: payload.mobile});
-                const insertData = await db.insertOneDataToCollection(model, payload);
+                const insertData = await db.insertDataToCollection(model, payload);
                 if(insertData) {
                     res.status(200).send({message: 'Sign Up Successful! Email has been send'});
                 } else {
@@ -49,7 +49,12 @@
             if(userData.length) {
                 const passwordCheck = await bcrypt.passwordCompare(userData[0].password, payload.password);
                 if(passwordCheck) {
-                    const loginToken = await tokenService.createToken(req, payload, '5h');
+                    const tokenObj = {
+                        email: userData[0].email,
+                        name: userData[0].name,
+                        _id: userData[0]._id
+                    }
+                    const loginToken = await tokenService.createToken(req, tokenObj, '5h');
                     if(loginToken) {
                         // await res.cookie('S', loginToken);
                         // res.cookie('S',loginToken, { maxAge: 900000, httpOnly: true });

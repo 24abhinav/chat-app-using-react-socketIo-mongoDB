@@ -16,7 +16,7 @@
     
     authorizer = (req, res, next) => {
         const tokenKey = req.cookies.isAdmin ? tokenSecretForAdmin : tokenSecret;
-        const token = req.cookies.S;
+        const token = req.headers.authorization;
         jwt.verify(token, tokenKey, (err, result) => {
             if (result) {
                 next();
@@ -30,6 +30,14 @@
         token = token.split(' ')[0];
         const decodedData = await verifyToken(token);
         return decodedData;
+    },
+
+    verifyToken = (token) => {
+        return new Promise((res) => {
+            jwt.verify(token, tokenSecret, (err, result) => {
+                res(result);
+            });
+        });
     },
 
 

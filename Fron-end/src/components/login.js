@@ -23,10 +23,7 @@ class Login extends Component {
     }
 
     changeHandler(e) {
-        // this.state.loginObject[e.target.name] = e.target.value;
-        // this.setState(state => {
-        //     state.data[e.target.name] = e.target.value;
-        // });
+        this.state.loginObject[e.target.name] = e.target.value;
     }
 
     changeUi() {

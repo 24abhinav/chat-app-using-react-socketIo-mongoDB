@@ -3,6 +3,8 @@ import '../scss/landingPage.scss';
 import Sidebar from './sidebar';
 import { Route } from 'react-router-dom';
 import UserProfile from './userProfile';
+import Messages from './Messages';
+import NewGroup from './newGroup';
 
 export default class LandingPage extends Component {
     constructor(props) {
@@ -16,7 +18,9 @@ export default class LandingPage extends Component {
             <React.Fragment>
                 <div className = "landing-page">
                     <Sidebar />
-                    <UserProfile />
+                    {/* <UserProfile /> */}
+                    {/* <Messages /> */}
+                    <NewGroup />
                 </div>
             </React.Fragment>
         )
