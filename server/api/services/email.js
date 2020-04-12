@@ -12,12 +12,6 @@ require('dotenv').config();
         auth: emailcredentials
     });
 
-    transporter.verify((err, resukt) => {
-        if(err) {
-            console.log('error-->', err)
-        }
-    });
-
     sendEmail = (mailOptions) => {
         return new Promise(async (res, rej) => {
             mailOptions.from = emailcredentials.user;

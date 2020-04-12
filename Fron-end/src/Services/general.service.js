@@ -23,7 +23,7 @@ const service = {
             api.get(url, { headers: {"Authorization" : token}}).then(response => resolve({Error: null, response})).catch(error => {
                 if(error.response.status === 401) {
                     Cookie.remove('S');
-                    window.location.href = '';
+                    window.location.reload();
                 }
                 resolve({Error:true,  error});
             });

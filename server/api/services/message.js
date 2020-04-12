@@ -18,15 +18,11 @@ require('dotenv').config();
 
             nexmo.message.sendSms(from, to, text, (err, responseData) => {
                 if (err) {
-                    console.log(err);
                     resolve(null);
                 } else {
                     if(responseData.messages[0]['status'] === "0") {
-                        console.log(responseData);
-                        console.log("Message sent successfully.");
                         resolve(otpArray.length - 1);
                     } else {
-                        console.log(`Message failed with error: ${responseData.messages[0]['error-text']}`);
                         resolve(null);
                     }
                 }

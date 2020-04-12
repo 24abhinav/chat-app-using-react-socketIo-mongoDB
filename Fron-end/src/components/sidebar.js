@@ -7,11 +7,12 @@ import http from '../Services/general.service';
 
 class Sidebar extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             open: true,
             groups: [],
             activeGroup: 0,
+            active: 0,
         }
         this.changeGroup = this.changeGroup.bind(this);
     }
@@ -31,10 +32,11 @@ class Sidebar extends Component {
         });
     }
 
+
     render() {
 
         const listItems = this.state.groups.map((item) =>
-            <li key = {item.roomId[0]._id} className = {this.state.activeGroup === item.roomId[0]._id ? 'active': ''} onClick = {() => this.changeGroup(item.roomId[0]._id)}>
+            <li key = {item.roomId[0]._id} className = {this.state.activeGroup === item.roomId[0]._id ? 'active': ''} onClick = {() => {this.props.changeUi({message: true, id: item.roomId[0]._id})}}>
                 {item.roomId[0].RoomName}
             </li>
         );
@@ -45,7 +47,7 @@ class Sidebar extends Component {
                     <nav className = "navBar">
                         <h1 className = "global-heading">
                             CHATS
-                            <button title = "New Group">+</button>
+                            <button title = "New Group" onClick = {() => {this.props.changeUi({newGroup: true, id: ''})}}>+</button>
                         </h1>
                         <ul>
                          {listItems}
@@ -53,10 +55,10 @@ class Sidebar extends Component {
                     </nav>
 
                     <div className = "sidebar-bottom">
-                        <Link className = "profile-link" to = "/profile">
+                        <div className = "profile-link" onClick = {() => {this.props.changeUi({profile: true, id: ''})}}>
                             <em className="fa fa-user"></em>
                             <h3>Abhinav Anand</h3>
-                        </Link>
+                        </div>
                     </div>
                     
                 </div>

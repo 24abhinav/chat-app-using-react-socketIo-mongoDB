@@ -6,7 +6,6 @@
     const tokenService = require('../services/token');
 
     router.post('/', async (req, res) => {
-        console.log(req.body);
         const payload = req.body;
         const checkDuplicate = await db.findRecord(model, {memberId: payload.memberId, roomId: payload.roomId});
         if(checkDuplicate.length) {
@@ -36,7 +35,6 @@
         // const data = await db.joinTables('RoomMemberAssociation', findQuery);
         // res.send(data);
         const findQuery = {memberId: userDetails._id}
-        console.log(findQuery);
         const roomDetails = await db.getAllGroupDetails('RoomMemberAssociation', findQuery);
         res.send(roomDetails);
     });

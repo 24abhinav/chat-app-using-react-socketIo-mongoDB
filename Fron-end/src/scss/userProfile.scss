@@ -25,10 +25,18 @@ button:focus {
     outline: none;
 }
 
+// .login-div {
+//     padding: 20px;
+//     box-shadow: 0 0 38px -15px #706f6dd6;
+//     background: white;   
+// }
+
 .main-div {
     display: flex;
     position: relative;
     padding: 25px;
+    box-shadow: 0 0 38px -15px #706f6dd6;
+    background: white;  
 
     .fa-edit {
         position: absolute;

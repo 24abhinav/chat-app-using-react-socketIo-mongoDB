@@ -40,7 +40,6 @@
     });
 
     router.post('/login', async (req, res) => {
-        console.log(req.headers);
         const payload = req.body;
         if(!payload.email || !payload.password) {
             res.status(400).send({message: 'Parametre(s) is missing'});
@@ -63,17 +62,16 @@
                         res.status(500).send({message: 'Internal Server Error'});
                     }
                 } else {
-                    res.status(400).send({message: 'Check your Email or password wrong'});
+                    res.status(400).send({message: 'Check your Email or password'});
                 }
             } else {
-                res.status(400).send({message: 'Email i snot fount Check your Email or password'});
+                res.status(400).send({message: 'Check your Email or password'});
             }
         }
     });
 
     router.post('/logout', async (req, res) => {
-        console.log(req.cookies.S);
-        // await res.clearCookie('S');
+        await res.clearCookie('S');
         res.status(200).send({message: 'Logout successfull'});
     });
 

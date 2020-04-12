@@ -11,7 +11,7 @@ section {
     width: 100vw;
 }
 
-.main-div {
+.login-div {
     padding: 20px;
     box-shadow: 0 0 38px -15px #706f6dd6;
     background: white;   
@@ -39,10 +39,18 @@ button:active {
         font-family: sans-serif;
     }
 
+    input {
+        border: none;
+        border-bottom: 1px solid #ced4da;
+    }
+
     input:focus {
         box-shadow: none;
-        border: 1px solid #2f669d;
+        border-bottom: 1px solid #2f669d;
         outline: none;
+    }
+    label {
+        margin: 0;
     }
 
 

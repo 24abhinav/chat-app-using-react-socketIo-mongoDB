@@ -64,7 +64,7 @@ class Login extends Component {
         return(
             <React.Fragment>
                 <section>
-                    <div className = "main-div">
+                    <div className = "login-div">
                         {
                             this.state.isLogin ? 
                             <div className = "form">

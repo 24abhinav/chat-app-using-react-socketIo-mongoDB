@@ -8,6 +8,7 @@
     const userModel = require('./api/models/User');
     const roomModel = require('./api/models/Room');
     const roomMemberAssociationModel = require('./api/models/RoomMemberAssociation');
+    const messageModel = require('./api/models/messages');
 
 
     const db = require('./api/services/database');
@@ -25,6 +26,7 @@
     app.use('/chat/user', userModel);
     app.use('/chat/room', roomModel);
     app.use('/chat/member', roomMemberAssociationModel);
+    app.use('/chat/message', messageModel);
 
 
     app.get('/', (req, res) => {

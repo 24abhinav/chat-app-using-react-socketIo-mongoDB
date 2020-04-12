@@ -16,7 +16,11 @@
         const payload = {...req.body, roomId};
         const roomDetails = await db.insertDataToCollection(model, payload);
         if(roomDetails) {
-            res.status(200).send({message: 'New Room Created', roomDetails});
+
+            const userDetails = await tokenService.decodeToken(req.headers.authorization);
+            const newMemberPayload = {memberId: userDetails._id, roomId: roomDetails.ops[0]._id};
+            await db.insertDataToCollection('RoomMemberAssociation', newMemberPayload);
+            res.status(200).send({message: 'New Room Created', roomDetails: roomDetails.ops[0]});
         } else {
             res.status(500).send({message: 'Internal Server Error'});
         }
