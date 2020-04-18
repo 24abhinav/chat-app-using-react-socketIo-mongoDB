@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Redirect } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 // Components

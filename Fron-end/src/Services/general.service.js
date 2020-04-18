@@ -15,7 +15,7 @@ const service = {
 
     get: (baseUrl, params) => {
         return new Promise((resolve, reject) => {
-            const url = config[baseUrl];
+            let url = config[baseUrl];
             if(params) {
                 url += params;
             }

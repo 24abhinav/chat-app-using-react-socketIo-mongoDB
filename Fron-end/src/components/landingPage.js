@@ -13,7 +13,7 @@ export default class LandingPage extends Component {
         super(props);
 
         this.state = {
-            active: 0,
+            active: 1,
             groupId: 0,
         };
 
@@ -28,9 +28,15 @@ export default class LandingPage extends Component {
         console.log(activeObj);
         if(activeObj.message) {
             this.setState({
-                active: 1,
-                groupId: activeObj.id
+                active: undefined
             });
+            setTimeout(() => {
+                this.setState({
+                    active: 1,
+                    groupId: activeObj.id
+                });
+            }, 0);
+
         } else if (activeObj.profile) {
             this.setState({
                 active: 2

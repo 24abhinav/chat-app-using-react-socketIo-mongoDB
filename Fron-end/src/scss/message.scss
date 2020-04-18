@@ -1,3 +1,59 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 74px;
+    position: fixed;
+    width: 80vw;
+    background: white;
+    box-shadow: 0px 1px 4px 1px #dbcfcf;
+
+    ul {
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+        margin: 0;
+
+        li {
+            display: flex;
+            align-items: baseline;
+            position: relative;
+
+            .roomName {
+                bottom: 10px;
+                color: black;
+                font-size: 13px;
+                font-weight: 600;
+                opacity: 0.7;
+                letter-spacing: 1px;
+            }
+
+            img {
+                width: 70px;
+            }
+
+            .room-option {
+                margin-right: 35px;
+                margin-right: 35px;
+                border: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                cursor: pointer;
+                padding: 20px;
+            }
+
+            select:focus {
+                border: none;
+                outline: none;
+            }
+
+            select::-ms-expand {
+                display: none;
+            }
+        }
+    }
+}
+
 .message-div {
     position: relative;
     width: 80vw;
@@ -8,6 +64,7 @@
     height: calc(100vh - 41px);
     overflow: auto;
     padding: 10px 25px;
+    margin-top: 74px;
 
     .group-info {
         text-align: center;
@@ -44,16 +101,16 @@
 }
 
 .message-bottom {
-    position: absolute;
-    left: 6px;
+    position: fixed;
+    left: 20vw;
     bottom: 4px;
     width: 97%;
     display: flex;
     height: 41px;
-    justify-content: space-evenly;
+    // justify-content: space-evenly;
 
     textarea {
-        width: 70%;
+        width: 60%;
         font-size: 13px;
         font-weight: 600;
         letter-spacing: 0.9px;
@@ -63,6 +120,7 @@
         border: 1px solid #0690a3;
         resize: none;
         overflow: hidden;
+        margin-left: 10px;
     }
 
     textarea:focus {
@@ -77,5 +135,6 @@
         padding: 4px 13px;
         letter-spacing: 1px;
         font-weight: 600;
+        margin-left: 10px;
     }
 }
