@@ -9,6 +9,7 @@
     const emailTemplates = require('../views/emailTemplates');
     const tokenService = require('../services/token');
     const model = 'User';
+    const { ObjectID } = require('mongodb');
 
     router.post('/signup', async (req, res) => {
         const payload = {...req.body};
@@ -68,6 +69,13 @@
                 res.status(400).send({message: 'Check your Email or password'});
             }
         }
+    });
+
+    router.get('/userDetails', async (req, res) => {
+        let tokenDetails = req.headers.authorization;
+        tokenDetails =  await tokenService.decodeToken(tokenDetails);
+        const userDetails = await db.findRecord(model, {_id: ObjectID(tokenDetails._id)});
+        res.json(userDetails[0]);
     });
 
     router.post('/logout', async (req, res) => {

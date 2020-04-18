@@ -1,6 +1,7 @@
 (function() {
     const express = require('express');
     const router = express.Router();
+    const { ObjectId }  = require('mongodb');
     const model = 'RoomMemberAssociation';
     const db = require('../services/database');
     const tokenService = require('../services/token');
@@ -34,7 +35,7 @@
         // ]
         // const data = await db.joinTables('RoomMemberAssociation', findQuery);
         // res.send(data);
-        const findQuery = {memberId: userDetails._id}
+        const findQuery = {memberId: ObjectId(userDetails._id)}
         const roomDetails = await db.getAllGroupDetails('RoomMemberAssociation', findQuery);
         res.send(roomDetails);
     });

@@ -15,9 +15,11 @@ export default class LandingPage extends Component {
         this.state = {
             active: 1,
             groupId: 0,
+            refresh: true
         };
 
         this.changeUi = this.changeUi.bind(this);
+        this.newRoom = this.newRoom.bind(this);
     }
 
     componentDidMount() {
@@ -25,7 +27,6 @@ export default class LandingPage extends Component {
     }
 
     changeUi(activeObj) {
-        console.log(activeObj);
         if(activeObj.message) {
             this.setState({
                 active: undefined
@@ -41,11 +42,27 @@ export default class LandingPage extends Component {
             this.setState({
                 active: 2
             });
-        } else {
+        } else if (activeObj.newGroup) {
             this.setState({
                 active: 3
             });
+        } else {
+            this.setState({
+                active: 4
+            });
         }
+    }
+
+    newRoom() {
+        this.setState({
+            refresh: false
+        });
+
+        setTimeout(() => {
+            this.setState({
+                refresh: true
+            });
+        }, 0);
     }
 
     render() {
@@ -53,11 +70,11 @@ export default class LandingPage extends Component {
         const renderIntoRight = () => {
             var ui;
             if(this.state.active === 1) {
-                return <Messages id = {this.state.groupId}/>
+                return <Messages id = {this.state.groupId} error = {this.changeUi}/>
             } else if (this.state.active === 2) {
                 return <UserProfile />
             } else if (this.state.active === 3) {
-                return <NewGroup />
+                return <NewGroup newRoomAlert = {this.newRoom} />
             } else {
                 return (
                     <div className=  "welcome-message">
@@ -70,7 +87,9 @@ export default class LandingPage extends Component {
         return (
             <React.Fragment>
                 <div className = "landing-page">
-                    <Sidebar changeUi = {this.changeUi}/>
+                    {
+                        this.state.refresh ? <Sidebar changeUi = {this.changeUi}/> : ''
+                    }
                     { renderIntoRight() }
                 </div>
             </React.Fragment>

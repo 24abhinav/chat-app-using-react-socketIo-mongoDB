@@ -3,6 +3,7 @@
     const express = require('express');
     // const token = require('')
     const router = express.Router();
+    const { ObjectId }  = require('mongodb');
     const model = 'Room'
     const db = require('../services/database');
     const tokenService = require('../services/token');
@@ -18,7 +19,18 @@
         if(roomDetails) {
 
             const userDetails = await tokenService.decodeToken(req.headers.authorization);
-            const newMemberPayload = {memberId: userDetails._id, roomId: roomDetails.ops[0]._id};
+            const newMemberPayload = {memberId: ObjectId(userDetails._id), roomId: roomDetails.ops[0]._id};
+            await db.insertDataToCollection('RoomMemberAssociation', newMemberPayload);
+
+            const message = {
+                memberId: userDetails._id,
+                memberName: userDetails.name,
+                message: userDetails.name + ' created this group',
+                type: 1,
+                time: new Date().toLocaleTimeString('en-In'),
+                roomId: roomId
+            }
+            await db.insertDataToCollection('Messages', message);
             await db.insertDataToCollection('RoomMemberAssociation', newMemberPayload);
             res.status(200).send({message: 'New Room Created', roomDetails: roomDetails.ops[0]});
         } else {
@@ -26,14 +38,36 @@
         }
     });
 
-    router.get('/', async (req, res) => {
-        // const userDetails = await tokenService.decodeToken(req.headers.authorization);
-        // const rooms = await db.findRecord('Room', {memberId: userDetails._id});
-        // if(rooms) {
-        //     res.status(200).send(rooms)
-        // } else {
-        //     res.status(500).send({message: 'Internal server Error'});
-        // }
+    router.get('/:id', async (req, res) => {
+        const messageJoinQuery = [
+            {$match: {_id: ObjectId(req.params.id)}},
+            {
+                $lookup: {
+                    from: 'Messages',
+                    localField: 'roomId',
+                    foreignField: 'roomId',
+                    as: 'Messages',
+                }
+            }
+        ]
+        const roomDetails = await db.joinTables('Room', messageJoinQuery);
+        const memberJoiQuery = [
+            {$match: {roomId: ObjectId(req.params.id)}},
+            {
+                $lookup: {
+                    from: 'User',
+                    localField: 'memberId',
+                    foreignField: '_id',
+                    as: 'memberId'
+                }
+            }
+        ];
+        const memberDetails = await db.joinTables('RoomMemberAssociation', memberJoiQuery);
+        if(roomDetails) {
+            res.status(200).send({roomDetails, memberDetails})
+        } else {
+            res.status(500).send({message: 'Internal server Error'});
+        }
     });
 
     module.exports = router;

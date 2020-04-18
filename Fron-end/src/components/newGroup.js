@@ -32,7 +32,7 @@ export default class NewGroup extends Component {
                 error: 'Server Error'
             });
         } else {
-            alert('room created successfully');
+            this.props.newRoomAlert();
         }
     }
 
@@ -50,6 +50,12 @@ export default class NewGroup extends Component {
                                 <h2>Create New Group</h2>
                                 <input type="text" className="form-control" placeholder = "Group Name" onChange = {this.changeHandler}/>
                                 <input type="text" className="form-control" placeholder = "Group Id " disabled />
+                                <input type="file" className="form-control" id = "roomLogo" />
+                                <label className = "roomLogo" for = "roomLogo">
+                                    <em className = "fa fa-upload"></em>
+                                    <span>Group Images</span>
+                                </label>
+
                             </div>
                         </div>
 

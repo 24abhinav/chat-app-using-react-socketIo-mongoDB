@@ -18,10 +18,14 @@ export default class Messages extends Component {
     async fetchAllMessage() {
 
         // alert(props.id);
-        const response = await http.get('FETCH_GROUP_MESSAGE', this.props.id);
-        this.setState({
-            messages: response?.response?.data?.messages
-        });
+        if(!this.props.id) {
+            this.props.error({home: true});
+        } else {
+            const response = await http.get('FETCH_GROUP_MESSAGE', this.props.id);
+            this.setState({
+                messages: response?.response?.data?.messages
+            });
+        }
 
         console.log(this.state.messages);
     }

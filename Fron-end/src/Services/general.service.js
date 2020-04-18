@@ -21,7 +21,7 @@ const service = {
             }
 
             api.get(url, { headers: {"Authorization" : token}}).then(response => resolve({Error: null, response})).catch(error => {
-                if(error.response.status === 401) {
+                if(error?.response?.status === 401) {
                     Cookie.remove('S');
                     window.location.reload();
                 }
@@ -34,7 +34,7 @@ const service = {
         return new Promise((resolve, reject) => {
             const url = config[baseUrl];
             api.post(url, payload, { headers: {"Authorization" : token}}).then(response => resolve({Error: null, response})).catch(error => {
-                if(error.response.status === 401) {
+                if(error?.response?.status === 401) {
                     // Cookie.remove('S');
                     // window.location.href = '';
                     debugger

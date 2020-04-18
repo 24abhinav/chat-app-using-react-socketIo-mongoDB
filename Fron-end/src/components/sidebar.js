@@ -46,7 +46,7 @@ class Sidebar extends Component {
                 <div className = "sidebar-div">
                     <nav className = "navBar">
                         <h1 className = "global-heading">
-                            CHATS
+                            GROUP
                             <button title = "New Group" onClick = {() => {this.props.changeUi({newGroup: true, id: ''})}}>+</button>
                         </h1>
                         <ul>
