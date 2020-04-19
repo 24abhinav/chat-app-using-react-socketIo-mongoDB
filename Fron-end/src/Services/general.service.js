@@ -14,7 +14,7 @@ const service = {
     },
 
     get: (baseUrl, params) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             let url = config[baseUrl];
             if(params) {
                 url += params;
@@ -31,9 +31,23 @@ const service = {
     },
 
     post: (baseUrl, payload) => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             const url = config[baseUrl];
             api.post(url, payload, { headers: {"Authorization" : token}}).then(response => resolve({Error: null, response})).catch(error => {
+                if(error?.response?.status === 401) {
+                    // Cookie.remove('S');
+                    // window.location.href = '';
+                    debugger
+                }
+                resolve({Error:true,  error});
+            });
+        });
+    },
+
+    patch: (baseUrl, payload) => {
+        return new Promise((resolve) => {
+            const url = config[baseUrl];
+            api.patch(url, payload, { headers: {"Authorization" : token}}).then(response => resolve({Error: null, response})).catch(error => {
                 if(error?.response?.status === 401) {
                     // Cookie.remove('S');
                     // window.location.href = '';

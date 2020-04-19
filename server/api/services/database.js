@@ -36,13 +36,20 @@
 
     updateRecord = async (collectionName = "Dummy" , query = {}, collectionObj = {}, many = false) => {
         return new Promise((resolve, reject) => {
-    
+            
+            if(collectionName === 'Dummy') {
+                resolve();
+                console.log('Collection Name is missing!!');
+                return;
+            }
+
             if(many) {
                 database.collection(collectionName).updateMany(query, newValue, (err, result) => {
                     resolve(result);
                 });
             } else {
-                let newValue = {...collectionObj, updatedAt: new Date().toISOString()};
+
+                let newValue = {...collectionObj, updatedAt: new Date()};
                 newValue =  {$set: newValue};
                 database.collection(collectionName).updateOne(query, newValue, (err, result) => {
                     resolve(result);
@@ -51,11 +58,17 @@
         });
     },
 
-    findRecord = async (collectionName, findQuery) => {
+    findRecord = async (collectionName, findQuery, type = true) => {
         return new Promise((resolve) => {
-            database.collection(collectionName).find(findQuery).toArray((err, result) => {
-                resolve(result);
-            });
+            if(type) {
+                database.collection(collectionName).find(findQuery).toArray((err, result) => {
+                    resolve(result);
+                });
+            } else {
+                database.collection(collectionName).findOne(findQuery, (err, result) => {
+                    resolve(result);
+                });
+            }
         });
     },
 
@@ -97,7 +110,8 @@
         findRecord,
         deleteOneRecord,
         joinTables,
-        getAllGroupDetails
+        getAllGroupDetails,
+        updateRecord
     };
 
 }());

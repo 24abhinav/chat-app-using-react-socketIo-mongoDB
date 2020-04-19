@@ -11,10 +11,12 @@ export default class UserProfile extends Component {
         this.state = {
             userDetails: {},
             editMode: false,
-            errorMsg: ''
+            errorMsg: '',
+            okMsg: '',
         }
 
         this.fetchUserDetails = this.fetchUserDetails.bind(this);
+        this.updateDetails = this.updateDetails.bind(this);
     }
 
     componentDidMount() {
@@ -52,17 +54,29 @@ export default class UserProfile extends Component {
                 return;
             }
         }
+        if(!this.state.userDetails.name || !this.state.userDetails.mobile) {
+            this.setState({
+                errorMsg: 'Fill the required fields!'
+            });
+            return;
+        }
+
+        this.setState({
+            errorMsg: ''
+        });
 
         const payload = {
             basic: {
-                name: this.state.userDetails.name,
-                mobile: this.state.userDetails.mobile
+                name: this.state.userDetails.name || false,
+                mobile: this.state.userDetails.mobile || false,
+                email: this.state.userDetails.email || false,
             },
 
             password: {
                 new: this.state.userDetails?.new || false,
                 old: this.state.userDetails?.old || false,
                 confirm: this.state.userDetails?.confirm || false,
+                email: this.state.userDetails.email || false,
             }
         }
 
@@ -70,7 +84,53 @@ export default class UserProfile extends Component {
             editMode: false
         });
 
-        console.log(payload);
+        if(payload.basic.name) {
+            this.updateDetails(payload, true);
+        }
+        if(payload.password.new) {
+            this.updateDetails(payload, false);
+        }
+    }
+
+    async updateDetails(payload, basic = false) {
+        let updateData;
+        if(basic) {
+            updateData = await http.patch('UPDATE_USER_DETAILS', payload.basic);
+        } else {
+            updateData = await http.patch('UPDATE_USER_PASSWORD', payload.password);
+        }
+        if(updateData?.Error) {  
+            this.setState({
+                errorMsg: updateData.error.response.data.message
+            });
+        } else {
+            this.setState({
+                errorMsg: '',
+                okMsg: basic ? 'Profile Updated Successfully!' : 'Password updated successfully'
+            });
+
+            setTimeout(() => {
+                this.setState({
+                    okMsg: ''
+                });
+            }, 3000);
+        }
+
+        const input = document.getElementsByTagName('input');
+        // input.forEach(element => {
+            // if(element.type === 'password') {
+            //     element.value = '';
+            // }
+        // });
+
+        for (const key in input) {
+            if (input.hasOwnProperty(key)) {
+                const element = input[key];
+                if(element.type === 'password') {
+                    element.value = '';
+                }
+            }
+        }
     }
 
  
@@ -101,15 +161,20 @@ export default class UserProfile extends Component {
                     </div>
 
                     <div className="toster-section">
-                        <div className="success" >
-                            <h2>Success</h2>
-                            <p>Ho gya</p>
-                        </div>
+                        {
+                            this.state.okMsg.length ? 
+                            <div className="success" >
+                                {/* <h2>Success</h2> */}
+                                <p>{this.state.okMsg}</p>
+                            </div>
+                            :
+                            ''
+                        }
                         <br />
-                        <div className="error">
+                        {/* <div className="error">
                             <h2>Failed!</h2>
                             <p>Nhi hua</p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </React.Fragment>

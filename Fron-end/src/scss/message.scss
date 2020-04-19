@@ -61,7 +61,7 @@
 }
 
 .message-container {
-    height: calc(100vh - 41px);
+    height: calc(100vh - 74px);
     overflow: auto;
     padding: 10px 25px;
     margin-top: 74px;
@@ -77,6 +77,10 @@
 
 .messages {
     margin-bottom: 15px;
+
+    h4 {
+        font-size: 17px;
+    }
 
     p {
         font-size: 16px;

@@ -49,6 +49,7 @@ class Login extends Component {
                 });
             } else {
                 Cookie.set('S', response.response.data.token);
+                sessionStorage.setItem('U', btoa(response.response.data.userData._id));
             }
 
         } else {

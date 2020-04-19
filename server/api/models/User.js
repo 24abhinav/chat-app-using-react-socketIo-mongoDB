@@ -58,7 +58,7 @@
                     if(loginToken) {
                         // await res.cookie('S', loginToken);
                         // res.cookie('S',loginToken, { maxAge: 900000, httpOnly: true });
-                        res.status(200).send({message: 'Login successfull',userData, token: loginToken});
+                        res.status(200).send({message: 'Login successfull',userData: userData[0], token: loginToken});
                     } else {
                         res.status(500).send({message: 'Internal Server Error'});
                     }
@@ -76,6 +76,56 @@
         tokenDetails =  await tokenService.decodeToken(tokenDetails);
         const userDetails = await db.findRecord(model, {_id: ObjectID(tokenDetails._id)});
         res.json(userDetails[0]);
+    });
+
+
+    router.patch('/update/userDetails', async (req, res) => {
+        const payload = req.body;
+        let check = await db.findRecord(model, {email: payload.email}, false);
+        const updateData = {
+            name: payload.name,
+            mobile: payload.mobile
+        };
+
+        if(check) {
+            const updateRecord = await db.updateRecord(model, {email: payload.email}, updateData, false);
+            if(updateRecord) {
+                res.status(200).send({message: 'User Details Update Succesfully!'});
+            } else {
+                res.status(500).send({message: 'Internal server Error'});
+            }
+        } else {
+            res.status(400).send({message: 'Email is not exist'});
+        }
+    });
+
+    router.patch('/update/password', async (req, res) => {
+        const payload = req.body;
+        const check = await db.findRecord(model, {email: payload.email}, false);
+        if(check) {
+            if(payload.new !== payload.confirm) {
+                res.status(400).send({message: 'Password don not match'});
+            } else {
+                const checkPassword = await bcrypt.passwordCompare(check.password, payload.old);
+                if(checkPassword) {
+                    const newHashedPassword = await bcrypt.encryptPassword(payload.new.toString());
+                    if(newHashedPassword) {
+                        const updateRecord = await db.updateRecord(model, {email: payload.email}, {password: newHashedPassword}, false);
+                        if(updateRecord) {
+                            res.status(200).send({message: 'Password Update successfully'});
+                        } else {
+                            res.status(500).send({message: 'Internal server Error'});
+                        }
+                    } else {
+                        res.status(500).send({message: 'Internal server Error'});
+                    }
+                } else {
+                    res.status(400).send({message: 'Wrong old password!'});
+                }
+            }
+        } else {
+            res.status(400).send({message: 'Email is not exist'});
+        }
     });
 
     router.post('/logout', async (req, res) => {
